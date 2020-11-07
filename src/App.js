@@ -7,17 +7,33 @@ import Grid from "@material-ui/core/Grid";
 import TodoList from "./components/todoList.component.jsx";
 import TodoForm from "./components/todoForm.component.jsx";
 import "./App.css";
+import uuid from "uuid/dist/v4";
+import todoList from "./components/todoList.component.jsx";
 
 function TodoApp() {
   const initialTodos = [
     { id: 1, todo: "Feed dog", done: false },
     { id: 2, todo: "Walk dog", done: false },
-    { id: 3, todo: "Wash dog", done: true },
+    { id: 3, todo: "Wash dog", done: false },
   ];
   const [todos, setTodo] = useState(initialTodos);
+
   const addTodo = (newTodoText) => {
-    setTodo([...todos, { id: 4, todo: newTodoText, done: false }]);
+    setTodo([...todos, { id: uuid(), todo: newTodoText, done: false }]);
   };
+
+  const removeTodo = (removeId) =>
+    setTodo(todos.filter((todo) => todo.id !== removeId));
+
+  const toggleTodo = (toggleId) => {
+    const toggledTodos = todos.map((todo) => {
+      return todo.id === toggleId ? { ...todo, done: !todo.done } : todo;
+    });
+    console.log("HERH: ", toggledTodos);
+
+    setTodo(toggledTodos);
+  };
+
   return (
     <Paper
       style={{
@@ -36,7 +52,11 @@ function TodoApp() {
       <div className="grid-container">
         {/* <div className="grid-item"> */}
         <TodoForm addTodo={addTodo} />
-        <TodoList todos={todos} />
+        <TodoList
+          removeTodo={removeTodo}
+          toggleTodo={toggleTodo}
+          todos={todos}
+        />
         {/* </div> */}
       </div>
     </Paper>
