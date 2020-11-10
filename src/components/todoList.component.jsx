@@ -12,15 +12,14 @@ const todoList = (props) => (
     <List>
       {props.todos.map(({ id, ...rest }) => (
         <>
-          <ListItem>
-            <Todo
-              key={id}
-              id={id}
-              {...rest}
-              removeTodo={props.removeTodo}
-              toggleTodo={props.toggleTodo}
-            />
-          </ListItem>
+          <Todo
+            key={id}
+            id={id}
+            {...rest}
+            removeTodo={props.removeTodo}
+            toggleTodo={props.toggleTodo}
+          />
+
           <Divider />
         </>
       ))}
